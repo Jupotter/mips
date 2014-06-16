@@ -1,6 +1,6 @@
 
 PRG=mips
-SRC=sub_string_finder.cpp
+SRC=test_pipeline.cpp
 
 INCLUDEDIR=../include/
 LIBDIR=../lib/
