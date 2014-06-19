@@ -1,6 +1,6 @@
 
 PRG=mips
-SRC=test_pipeline.cpp
+SRC=pipeline_stage.cpp context.cpp test_pipeline.cpp
 
 INCLUDEDIR=../include/
 LIBDIR=../lib/
