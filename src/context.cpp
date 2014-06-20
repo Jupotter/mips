@@ -19,3 +19,6 @@ void Context::setPC(unsigned int value)
 {
     _pc = value;
 }
+
+Context::Context()
+{ }

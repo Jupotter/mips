@@ -1,11 +1,11 @@
 
 PRG=mips
-SRC=pipeline_stage.cpp context.cpp test_pipeline.cpp
+SRC=pipeline_stage.cpp context.cpp test_pipeline.cpp instruction_fetch.cpp
 
 INCLUDEDIR=../include/
 LIBDIR=../lib/
 
-CXXFLAGS=-std=c++11 -O0 -Wall -Werror
+CXXFLAGS=-std=c++11 -O0 -g -ggdb -Wall -Werror
 LDFLAGS=-ltbb -lrt
 
 CC=gcc

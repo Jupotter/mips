@@ -7,13 +7,13 @@
 
 class PipelineStage : public tbb::filter
 {
-    private:
-        Context _contexte;
+    protected:
+        Context& _contexte;
         virtual Interstage* process(Interstage* input) = 0;
 
 
     public:
-        PipelineStage(Context contexte);
+        PipelineStage(Context& contexte);
 
         void* operator()(void* input);
 };
