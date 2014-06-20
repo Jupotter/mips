@@ -14,8 +14,15 @@ struct Interstage
         int op1;    // rs
         int op2;    // rt ou immediat, suivant les cas
         Operations op;
-        int result;
+        int result; // result from the ALU
         int immed;  // if no immediate -> 0
+
+        bool memoryWrite; // do I write or read in memory?
+        int data; // Data read from or written to memory
+
+        bool writeData; // Write data or write result to register?
+
+        bool jump; // Do this instruction change PC?
 };
 
 #endif /* !INTERSTAGE_HH */
