@@ -29,5 +29,6 @@ objs :
 
 clean :
 	rm -rf objs/
+	rm ${PRG}
 
 .PHONY : all clean
