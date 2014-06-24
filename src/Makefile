@@ -1,7 +1,7 @@
 
 PRG=mips
 SRC=test_pipeline.cpp pipeline_stage.cpp context.cpp instruction_fetch.cpp \
-    execution.cpp memory_stage.cpp write_back.cpp
+    execution.cpp memory_stage.cpp write_back.cpp instruction_decode.cpp
 
 INCLUDEDIR=../include/
 LIBDIR=../lib/
@@ -12,19 +12,19 @@ LDFLAGS=-ltbb -lrt
 CC=gcc
 CXX=g++
 
-OBJ=$(SRC:.cpp=.o)
+OBJ=$(addprefix objs/, $(notdir $(SRC:.cpp=.o)))
 
 all : $(PRG)
 
 $(PRG) : $(OBJ)
 	$(CXX) $(CXXFLAGS) $(addprefix -L, $(LIBDIR)) \
-	    $(addprefix objs/, $(notdir $^)) -o $@ $(LDFLAGS)
+	    $^ -o $@ $(LDFLAGS)
 
-%.o : %.c | objs
-	$(CC) $(CFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o objs/$@
+objs/%.o : %.c | objs
+	$(CC) $(CFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o $@
 
-%.o : %.cpp | objs
-	$(CXX) $(CXXFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o objs/$@
+objs/%.o : %.cpp | objs
+	$(CXX) $(CXXFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o $@
 
 objs :
 	mkdir -p objs
@@ -33,4 +33,7 @@ clean :
 	rm -rf objs/
 	rm ${PRG}
 
-.PHONY : all clean
+launch : $(PRG)
+	./$(PRG)
+
+.PHONY : all clean launch
