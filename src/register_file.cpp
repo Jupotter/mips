@@ -48,3 +48,13 @@ RegisterFile::~RegisterFile()
   for (int i = 0; i < 32; i++)
     delete(this->_decoder[i]);
 }
+
+Register* RegisterFile::getRegister(int index) const
+{
+    if (index >= 0 && index < 32)
+        return _decoder[index];
+    else
+        return NULL;
+}
+
+

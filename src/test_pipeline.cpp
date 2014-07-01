@@ -12,7 +12,7 @@ int main()
 {
     Context* context = new Context;
 
-    std::stringstream stringstream("lw   $10, 20($1)\nsub  $11, $2, $3");
+    std::stringstream stringstream("addi 10 5 20)\nsubi 5 5 3");
 
     InstructionFetch instructionFetch(stringstream, *context);
     InstructionDecode instructionDecode(*context);

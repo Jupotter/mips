@@ -20,6 +20,8 @@ struct Interstage
         bool memoryWrite; // do I write or read in memory?
         int data; // Data read from or written to memory
 
+        int write_reg;
+
         bool writeData; // Write data or write result to register?
 
         bool jump; // Do this instruction change PC?

@@ -8,6 +8,7 @@ Interstage* Execution::process(Interstage* input)
 
     int result = 0;
 
+    std::cout << op1 << " " << op2 << std::endl;
     switch (op)
     {
         case ADD:

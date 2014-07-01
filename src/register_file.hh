@@ -15,6 +15,7 @@ public:
   RegisterFile();
   ~RegisterFile();
   void dump(void);
+  Register* getRegister(int index) const;
 
 };
 

@@ -1,7 +1,8 @@
 
 PRG=mips
 SRC=test_pipeline.cpp pipeline_stage.cpp context.cpp instruction_fetch.cpp \
-    execution.cpp memory_stage.cpp write_back.cpp instruction_decode.cpp
+    execution.cpp memory_stage.cpp write_back.cpp instruction_decode.cpp \
+    register.cpp register_file.cpp
 
 INCLUDEDIR=../include/
 LIBDIR=../lib/

@@ -20,5 +20,17 @@ void Context::setPC(unsigned int value)
     _pc = value;
 }
 
+RegisterFile& Context::getRegisters() const
+{
+    return *_registers;
+}
+
 Context::Context()
-{ }
+{
+    _registers = new RegisterFile();
+}
+
+Context::~Context()
+{
+    delete(_registers);
+}
