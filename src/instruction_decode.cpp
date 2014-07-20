@@ -95,6 +95,11 @@ void InstructionDecode::decodeOperation(std::string& operation, Interstage* inpu
 
 Interstage* InstructionDecode::process(Interstage* input)
 {
+    _contexte.getCoutMutex().lock();
+    std::cout
+        << PIPELINE->t_get() << ":ID: " << *input->instruction << std::endl;
+    _contexte.getCoutMutex().unlock();
+
     std::vector<std::string> tokens = split(*input->instruction, ' ');
 
     std::string operation = toUpper(tokens[0]);

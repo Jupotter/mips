@@ -17,11 +17,16 @@ Interstage* InstructionFetch::process(Interstage* input)
     {
         line = new std::string();
         if (0 == std::getline(_file, *line))
-            return NULL;
+            return (Interstage*)p::latch::terminate;
         _history.push_back(line);
     }
 
     line = _history[pc];
+
+    _contexte.getCoutMutex().lock();
+    std::cout
+        << PIPELINE->t_get() << ":IF: " << *line << std::endl;
+    _contexte.getCoutMutex().unlock();
 
     Interstage* ret = new Interstage;
     ret->pc = pc + 1;

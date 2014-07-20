@@ -1,10 +1,18 @@
 #include "pipeline_stage.hh"
 
+p::pipeline* PipelineStage::PIPELINE = NULL;
+
 PipelineStage::PipelineStage(Context& contexte)
-    : filter(tbb::filter::serial_in_order), _contexte(contexte)
+    : _contexte(contexte)
 { }
 
 void* PipelineStage::operator()(void* input)
 {
-    return (process((Interstage*)input));
+    Interstage* ret = process((Interstage*)input);
+    return ret;
+}
+
+void PipelineStage::SetPipeline(p::pipeline* p)
+{
+    PIPELINE = p;
 }

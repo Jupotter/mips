@@ -9,7 +9,11 @@
 
 Interstage* WriteBack::process(Interstage* input)
 {
-    std::cout << input->result << std::endl;
+    _contexte.getCoutMutex().lock();
+    std::cout
+        << PIPELINE->t_get() << ":WB:" << *input->instruction << std::endl;
+    _contexte.getCoutMutex().unlock();
+
     if (!input->memoryWrite)
     {
         _contexte
@@ -26,7 +30,11 @@ Interstage* WriteBack::process(Interstage* input)
     }
     delete input;
 
-    // DEBUG
-    _contexte.getRegisters().dump();
-    return NULL;
+    _contexte.endInstruction();
+
+//    // DEBUG
+//    _contexte.getCoutMutex().lock();
+//    _contexte.getRegisters().dump();
+//    _contexte.getCoutMutex().unlock();
+    return input;
 }
