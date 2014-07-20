@@ -17,7 +17,7 @@ class InstructionDecode : public PipelineStage
     private:
         Operations _op;
         InstructionType _type;
-        void decodeOperation(std::string& operation);
+  void decodeOperation(std::string& operation, Interstage* input);
         Interstage* process(Interstage* input);
 
 
