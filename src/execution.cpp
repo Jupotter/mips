@@ -16,6 +16,12 @@ Interstage* Execution::process(Interstage* input)
         case SUB:
             result = op1 - op2;
             break;
+        case LW:
+            result = op1 + op2;
+            break;
+        case SW:
+	    result = op1 + op2;
+	    break;
         default:
             result = 0;
             break;

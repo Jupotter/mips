@@ -38,9 +38,12 @@ std::string toUpper(std::string input)
     return input;
 }
 
-void InstructionDecode::decodeOperation(std::string& operation)
+void InstructionDecode::decodeOperation(std::string& operation, Interstage* input)
 {
     _jump = false;
+    input->memoryWrite = false;
+    input->writeData = false;
+
     if (operation.compare("ADD") == 0)
     {
         _type = R_TYPE;
@@ -72,6 +75,18 @@ void InstructionDecode::decodeOperation(std::string& operation)
         _type = J_TYPE;
         _op = NOP;
     }
+    else if (operation.compare("LW") == 0)
+    {
+        _type = I_TYPE;
+        _op = LW;
+        input->writeData = true;
+    }
+    else if (operation.compare("SW") == 0)
+    {
+        _type = I_TYPE;
+        _op = SW;
+        input->memoryWrite = true;
+    }
     else
     {
         std::cerr << "Error, unkown operation " << operation << std::endl;
@@ -84,7 +99,7 @@ Interstage* InstructionDecode::process(Interstage* input)
 
     std::string operation = toUpper(tokens[0]);
 
-    decodeOperation(operation);
+    decodeOperation(operation, input);
 
     input->op = _op;
 
@@ -104,6 +119,7 @@ Interstage* InstructionDecode::process(Interstage* input)
         input->write_reg = std::stoi(tokens[2]);
         input->op2 = std::stoi(tokens[3]);
         input->immed = input->op2;
+        input->data = _contexte.getRegisters().getRegister(input->write_reg)->load();
     }
     else if (_type == J_TYPE)
     {
@@ -114,7 +130,5 @@ Interstage* InstructionDecode::process(Interstage* input)
         input->jump = _jump;
     }
 
-    input->memoryWrite = false;
-    input->writeData = true;
     return input;
 }

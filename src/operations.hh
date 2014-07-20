@@ -5,6 +5,8 @@ enum Operations
 {
     ADD,
     SUB,
+    LW,
+    SW,
     NOP,
 };
 
