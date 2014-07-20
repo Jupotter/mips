@@ -4,12 +4,13 @@
 InstructionFetch::InstructionFetch(std::istream& file, Context& context)
     : PipelineStage(context), _file(file)
 {
-    std::string* line = new std::string("nop 0 0 0");
+    std::string* line = new std::string("nop 0");
     _history.push_back(line);
 }
 
 Interstage* InstructionFetch::process(Interstage* input)
 {
+    _contexte.reset();
     unsigned int pc = _contexte.getPC();
     std::string* line;
 
@@ -17,7 +18,10 @@ Interstage* InstructionFetch::process(Interstage* input)
     {
         line = new std::string();
         if (0 == std::getline(_file, *line))
+        {
+            _contexte.end();
             return (Interstage*)p::latch::terminate;
+        }
         _history.push_back(line);
     }
 
@@ -30,6 +34,7 @@ Interstage* InstructionFetch::process(Interstage* input)
     _contexte.getCoutMutex().unlock();
     #endif
 
+
     Interstage* ret = new Interstage;
     ret->pc = pc + 1;
     _contexte.setPC(pc + 1);
@@ -38,3 +43,11 @@ Interstage* InstructionFetch::process(Interstage* input)
     return ret;
 }
 
+InstructionFetch::~InstructionFetch()
+{
+    for (std::string* str : _history)
+    {
+        delete(str);
+    }
+    _history.clear();
+}

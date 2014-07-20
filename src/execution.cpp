@@ -2,6 +2,8 @@
 
 Interstage* Execution::process(Interstage* input)
 {
+    while (_contexte.isReset() == false);
+
     #ifdef DEBUG
     _contexte.getCoutMutex().lock();
     std::cout
@@ -27,9 +29,8 @@ Interstage* Execution::process(Interstage* input)
             result = op1 + op2;
             break;
         case SW:
-	    result = op1 + op2;
-	    std::cout << "Result SW : " << result << std::endl;
-	    break;
+            result = op1 + op2;
+            break;
         default:
             result = 0;
             break;
@@ -37,6 +38,10 @@ Interstage* Execution::process(Interstage* input)
     input->pc += input->immed;
     input->result = result;
     return input;
+
+    while (_contexte.pc_changed == false);
+    if (input->jump)
+        _contexte.setPC(input->pc);
 }
 
 Execution::Execution(Context& context)

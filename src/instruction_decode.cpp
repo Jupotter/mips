@@ -95,6 +95,7 @@ void InstructionDecode::decodeOperation(std::string& operation, Interstage* inpu
 
 Interstage* InstructionDecode::process(Interstage* input)
 {
+    while (_contexte.isReset() == false);
     #ifdef DEBUG
     _contexte.getCoutMutex().lock();
     std::cout

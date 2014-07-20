@@ -15,6 +15,7 @@ class InstructionFetch : public PipelineStage
 
     public:
         InstructionFetch(std::istream& file, Context& context);
+        ~InstructionFetch();
 
 };
 
