@@ -2,10 +2,12 @@
 
 Interstage* Execution::process(Interstage* input)
 {
+    #ifdef DEBUG
     _contexte.getCoutMutex().lock();
     std::cout
         << PIPELINE->t_get() << ":EXE: " << *input->instruction << std::endl;
     _contexte.getCoutMutex().unlock();
+    #endif
 
     int op1 = input->op1;
     int op2 = input->op2;
@@ -26,6 +28,7 @@ Interstage* Execution::process(Interstage* input)
             break;
         case SW:
 	    result = op1 + op2;
+	    std::cout << "Result SW : " << result << std::endl;
 	    break;
         default:
             result = 0;

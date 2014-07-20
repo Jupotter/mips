@@ -95,10 +95,12 @@ void InstructionDecode::decodeOperation(std::string& operation, Interstage* inpu
 
 Interstage* InstructionDecode::process(Interstage* input)
 {
+    #ifdef DEBUG
     _contexte.getCoutMutex().lock();
     std::cout
         << PIPELINE->t_get() << ":ID: " << *input->instruction << std::endl;
     _contexte.getCoutMutex().unlock();
+    #endif
 
     std::vector<std::string> tokens = split(*input->instruction, ' ');
 

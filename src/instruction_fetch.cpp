@@ -23,10 +23,12 @@ Interstage* InstructionFetch::process(Interstage* input)
 
     line = _history[pc];
 
+    #ifdef DEBUG
     _contexte.getCoutMutex().lock();
     std::cout
         << PIPELINE->t_get() << ":IF: " << *line << std::endl;
     _contexte.getCoutMutex().unlock();
+    #endif
 
     Interstage* ret = new Interstage;
     ret->pc = pc + 1;
