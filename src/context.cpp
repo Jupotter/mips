@@ -1,4 +1,5 @@
 #include "context.hh"
+#include <istream>
 
 int Context::getCycleCount() const
 {

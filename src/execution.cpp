@@ -8,7 +8,6 @@ Interstage* Execution::process(Interstage* input)
 
     int result = 0;
 
-    std::cout << op1 << " " << op2 << std::endl;
     switch (op)
     {
         case ADD:
@@ -21,7 +20,7 @@ Interstage* Execution::process(Interstage* input)
             result = 0;
             break;
     }
-    input->pc += input->immed << 2;
+    input->pc += input->immed;
     input->result = result;
     return input;
 }

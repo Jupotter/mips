@@ -9,7 +9,6 @@ WriteBack::WriteBack(Context& context)
 
 Interstage* WriteBack::process(Interstage* input)
 {
-    std::cout << input->result << std::endl;
     _contexte
         .getRegisters()
         .getRegister(input->write_reg)

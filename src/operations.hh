@@ -5,6 +5,7 @@ enum Operations
 {
     ADD,
     SUB,
+    NOP,
 };
 
 #endif /* !OPERATIONS_HH */

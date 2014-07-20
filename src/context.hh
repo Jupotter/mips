@@ -7,7 +7,7 @@ class Context
 {
     private:
         int _cycle_count = 0;
-        unsigned int _pc = 0;
+        unsigned int _pc = 1;
         RegisterFile* _registers;
 
 

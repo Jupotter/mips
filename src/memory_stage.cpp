@@ -6,6 +6,10 @@ MemoryStage::MemoryStage(Context& context)
 
 Interstage* MemoryStage::process(Interstage* input)
 {
+    if (input->jump)
+    {
+        _contexte.setPC(input->pc);
+    }
     if (input->memoryWrite)
     {
         _memory[input->result] = input->data;
