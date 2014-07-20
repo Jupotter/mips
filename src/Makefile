@@ -7,7 +7,7 @@ SRC=test_pipeline.cpp pipeline_stage.cpp context.cpp instruction_fetch.cpp \
 INCLUDEDIR=../include/
 LIBDIR=../lib/
 
-CXXFLAGS=-std=c++11 -O0 -g -ggdb -Wall -Werror
+CXXFLAGS=-std=c++11 -O0 -g -ggdb -Wall -Werror -Wl,--no-as-needed
 LDFLAGS=-ltbb -lrt
 
 CC=gcc
