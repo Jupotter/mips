@@ -7,7 +7,7 @@ SRC=test_pipeline.cpp pipeline_stage.cpp context.cpp instruction_fetch.cpp \
 INCLUDEDIR=../include/
 LIBDIR=../lib/
 
-CXXFLAGS=-std=c++11 -O0 -g -ggdb -Wall -Werror
+CXXFLAGS=-std=c++11 -O0 -g -ggdb -Wall -Werror -Wl,--no-as-needed
 LDFLAGS=-ltbb -lrt
 
 CC=gcc
@@ -33,8 +33,12 @@ objs :
 clean :
 	rm -rf objs/
 	rm ${PRG}
+	rm -rf test/*.result
 
 launch : $(PRG)
 	./$(PRG)
 
-.PHONY : all clean launch
+test :
+	cd test && ./test.sh
+
+.PHONY : all clean launch test

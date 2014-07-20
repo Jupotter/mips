@@ -20,6 +20,9 @@
 *.out
 *.app
 
+# Generated results for tests
+*.result
+
 src/.deps/
 src/.dirstamp
 lib/
