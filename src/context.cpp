@@ -1,13 +1,14 @@
 #include "context.hh"
+#include <istream>
 
-int Context::getCycleCount() const
+int Context::getInstructionCount() const
 {
-    return _cycle_count;
+    return _instruction_count;
 }
 
-void Context::startNewCycle()
+void Context::endInstruction()
 {
-    _cycle_count++;
+    _instruction_count++;
 }
 
 unsigned int Context::getPC() const
@@ -25,12 +26,19 @@ RegisterFile& Context::getRegisters() const
     return *_registers;
 }
 
+std::mutex& Context::getCoutMutex() const
+{
+    return *_mutex;
+}
+
 Context::Context()
 {
+    _mutex = new std::mutex();
     _registers = new RegisterFile();
 }
 
 Context::~Context()
 {
+    delete(_mutex);
     delete(_registers);
 }

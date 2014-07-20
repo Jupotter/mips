@@ -2,13 +2,17 @@
 
 Interstage* Execution::process(Interstage* input)
 {
+    _contexte.getCoutMutex().lock();
+    std::cout
+        << PIPELINE->t_get() << ":EXE: " << *input->instruction << std::endl;
+    _contexte.getCoutMutex().unlock();
+
     int op1 = input->op1;
     int op2 = input->op2;
     Operations op = input->op;
 
     int result = 0;
 
-    std::cout << op1 << " " << op2 << std::endl;
     switch (op)
     {
         case ADD:
@@ -27,7 +31,7 @@ Interstage* Execution::process(Interstage* input)
             result = 0;
             break;
     }
-    input->pc += input->immed << 2;
+    input->pc += input->immed;
     input->result = result;
     return input;
 }

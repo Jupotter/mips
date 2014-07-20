@@ -7,7 +7,7 @@ enum Operations
     SUB,
     LW,
     SW,
-
+    NOP,
 };
 
 #endif /* !OPERATIONS_HH */

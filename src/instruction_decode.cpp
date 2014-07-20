@@ -40,6 +40,7 @@ std::string toUpper(std::string input)
 
 void InstructionDecode::decodeOperation(std::string& operation, Interstage* input)
 {
+    _jump = false;
     input->memoryWrite = false;
     input->writeData = false;
 
@@ -63,17 +64,28 @@ void InstructionDecode::decodeOperation(std::string& operation, Interstage* inpu
         _type = I_TYPE;
         _op= SUB;
     }
+    else if (operation.compare("J") == 0)
+    {
+        _type = J_TYPE;
+        _op = NOP;
+        _jump = true;
+    }
+    else if (operation.compare("NOP") == 0)
+    {
+        _type = J_TYPE;
+        _op = NOP;
+    }
     else if (operation.compare("LW") == 0)
     {
         _type = I_TYPE;
         _op = LW;
-	input->writeData = true;
+        input->writeData = true;
     }
     else if (operation.compare("SW") == 0)
     {
         _type = I_TYPE;
         _op = SW;
-	input->memoryWrite = true;
+        input->memoryWrite = true;
     }
     else
     {
@@ -83,6 +95,11 @@ void InstructionDecode::decodeOperation(std::string& operation, Interstage* inpu
 
 Interstage* InstructionDecode::process(Interstage* input)
 {
+    _contexte.getCoutMutex().lock();
+    std::cout
+        << PIPELINE->t_get() << ":ID: " << *input->instruction << std::endl;
+    _contexte.getCoutMutex().unlock();
+
     std::vector<std::string> tokens = split(*input->instruction, ' ');
 
     std::string operation = toUpper(tokens[0]);
@@ -107,7 +124,15 @@ Interstage* InstructionDecode::process(Interstage* input)
         input->write_reg = std::stoi(tokens[2]);
         input->op2 = std::stoi(tokens[3]);
         input->immed = input->op2;
-	input->data = _contexte.getRegisters().getRegister(input->write_reg)->load();
+        input->data = _contexte.getRegisters().getRegister(input->write_reg)->load();
+    }
+    else if (_type == J_TYPE)
+    {
+        input->immed = std::stoi(tokens[1]);
+        input->op1 = 0;
+        input->op2 = 0;
+        input->write_reg = 0;
+        input->jump = _jump;
     }
 
     return input;
