@@ -1,3 +1,4 @@
+#include <fstream>
 #include <sstream>
 #include "tbb/pipeline.h"
 #include "context.hh"
@@ -7,13 +8,20 @@
 #include "memory_stage.hh"
 #include "write_back.hh"
 
-
-int main()
+int main(int argc, char* argv[])
 {
-    Context* context = new Context;
+    if (argc != 2)
+    {
+        std::cout << "Vous devez spécifier un fichier à tester !" << std::endl;
+	return 1;
+    }
 
-    //std::stringstream stringstream("addi 10 5 20)\nsubi 5 5 3");
-    std::stringstream stringstream("addi 10 5 20\naddi 10 4 3\nsw 4 5 0\nlw 5 8 0");
+    Context* context = new Context;
+    std::ifstream file(argv[1]);
+
+    std::stringstream stringstream;
+    stringstream << file.rdbuf();
+    file.close();
     InstructionFetch instructionFetch(stringstream, *context);
     InstructionDecode instructionDecode(*context);
     Execution execution(*context);
@@ -31,4 +39,3 @@ int main()
     delete(context);
     return 0;
 }
-

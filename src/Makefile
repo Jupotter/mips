@@ -33,8 +33,12 @@ objs :
 clean :
 	rm -rf objs/
 	rm ${PRG}
+	rm -rf test/*.result
 
 launch : $(PRG)
 	./$(PRG)
 
-.PHONY : all clean launch
+test :
+	cd test && ./test.sh
+
+.PHONY : all clean launch test
