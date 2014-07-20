@@ -24,3 +24,5 @@ src/.deps/
 src/.dirstamp
 lib/
 include/
+
+mips*
