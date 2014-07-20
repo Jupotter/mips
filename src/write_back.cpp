@@ -9,6 +9,7 @@
 
 Interstage* WriteBack::process(Interstage* input)
 {
+    while (_contexte.isReset() == false);
     _contexte.getCoutMutex().lock();
     std::cout
         << PIPELINE->t_get() << ":WB:" << *input->instruction << std::endl;

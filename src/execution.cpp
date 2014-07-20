@@ -2,6 +2,7 @@
 
 Interstage* Execution::process(Interstage* input)
 {
+    while (_contexte.isReset() == false);
     _contexte.getCoutMutex().lock();
     std::cout
         << PIPELINE->t_get() << ":EXE: " << *input->instruction << std::endl;
@@ -25,8 +26,8 @@ Interstage* Execution::process(Interstage* input)
             result = op1 + op2;
             break;
         case SW:
-	    result = op1 + op2;
-	    break;
+            result = op1 + op2;
+            break;
         default:
             result = 0;
             break;
@@ -34,6 +35,10 @@ Interstage* Execution::process(Interstage* input)
     input->pc += input->immed;
     input->result = result;
     return input;
+
+    while (_contexte.pc_changed == false);
+    if (input->jump)
+        _contexte.setPC(input->pc);
 }
 
 Execution::Execution(Context& context)

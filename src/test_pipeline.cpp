@@ -12,9 +12,9 @@ int main()
 {
     Context* context = new Context;
 
-    //std::stringstream stringstream("addi 10 5 20\nsubi 5 5 3\nj 1\nnop 0\nnop 0");
+    std::stringstream stringstream("addi 10 5 20\nsubi 5 5 3\nj -1\nnop 0\nnop 0\nnop 0");
     //std::stringstream stringstream("addi 10 5 20)\nsubi 5 5 3");
-    std::stringstream stringstream("addi 10 5 20\naddi 10 4 3\nsw 4 5 0\nlw 5 8 0\nnop 0\nnop 0");
+    //std::stringstream stringstream("addi 10 5 20\naddi 10 4 3\nsw 4 5 0\nlw 5 8 0");
 
     InstructionFetch instructionFetch(stringstream, *context);
     InstructionDecode instructionDecode(*context);

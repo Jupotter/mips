@@ -6,15 +6,12 @@ MemoryStage::MemoryStage(Context& context)
 
 Interstage* MemoryStage::process(Interstage* input)
 {
+    while (_contexte.isReset() == false);
     _contexte.getCoutMutex().lock();
     std::cout <<
         PIPELINE->t_get() << ":MEM: " << *input->instruction << std::endl;
     _contexte.getCoutMutex().unlock();
 
-    if (input->jump)
-    {
-        _contexte.setPC(input->pc);
-    }
     if (input->memoryWrite)
     {
         // input->op2 == input->data
