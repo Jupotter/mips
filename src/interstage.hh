@@ -13,6 +13,8 @@ struct Interstage
 
         int op1;    // rs
         int op2;    // rt ou immediat, suivant les cas
+        int rs;    // Numero de registre rs
+        int rt;    // Numero de registre rt
         Operations op;
         int result; // result from the ALU
         int immed;  // if no immediate -> 0

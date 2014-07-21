@@ -2,12 +2,12 @@
 PRG=mips
 SRC=main.cpp pipeline_stage.cpp context.cpp instruction_fetch.cpp \
     execution.cpp memory_stage.cpp write_back.cpp instruction_decode.cpp \
-    register.cpp register_file.cpp pipeline.cpp
+    register.cpp register_file.cpp pipeline.cpp forwarding_unit.cpp
 
 INCLUDEDIR=../include/
 LIBDIR=../lib/
 
-CXXFLAGS=-std=c++11 -O0 -g -ggdb -Wall -Werror -Wl,--no-as-needed
+CXXFLAGS=-DDEBUG -std=c++11 -O0 -g -ggdb -Wall -Werror -Wl,--no-as-needed
 LDFLAGS=-ltbb -lrt
 
 CC=gcc

@@ -50,21 +50,25 @@ void InstructionDecode::decodeOperation(std::string& operation, Interstage* inpu
     {
         _type = R_TYPE;
         _op= ADD;
+	input->writeData = true;
     }
     else if (operation.compare("ADDI") == 0)
     {
         _type = I_TYPE;
         _op= ADD;
+	input->writeData = true;
     }
     else if (operation.compare("SUB") == 0)
     {
         _type = R_TYPE;
         _op= SUB;
+	input->writeData = true;
     }
     else if (operation.compare("SUBI") == 0)
     {
         _type = I_TYPE;
         _op= SUB;
+	input->writeData = true;
     }
     else if (operation.compare("J") == 0)
     {
@@ -115,18 +119,19 @@ Interstage* InstructionDecode::process(Interstage* input)
 
     if (_type == R_TYPE)
     {
-        int reg1 = std::stoi(tokens[1]);
-        input->op1 = _contexte.getRegisters().getRegister(reg1)->load();
-        int reg2 = std::stoi(tokens[2]);
-        input->op2 = _contexte.getRegisters().getRegister(reg2)->load();
+        input->rs = std::stoi(tokens[1]);
+        input->op1 = _contexte.getRegisters().getRegister(input->rs)->load();
+        input->rt = std::stoi(tokens[2]);
+        input->op2 = _contexte.getRegisters().getRegister(input->rt)->load();
         input->write_reg = std::stoi(tokens[3]);
         input->immed = 0;
     }
     else if (_type == I_TYPE)
     {
-        int reg1 = std::stoi(tokens[1]);
-        input->op1 = _contexte.getRegisters().getRegister(reg1)->load();
+        input->rs = std::stoi(tokens[1]);
+        input->op1 = _contexte.getRegisters().getRegister(input->rs)->load();
         input->write_reg = std::stoi(tokens[2]);
+	input->rt = std::stoi(tokens[2]);
         input->op2 = std::stoi(tokens[3]);
         input->immed = input->op2;
         input->data = _contexte.getRegisters().getRegister(input->write_reg)->load();
@@ -134,6 +139,8 @@ Interstage* InstructionDecode::process(Interstage* input)
     else if (_type == J_TYPE)
     {
         input->immed = std::stoi(tokens[1]);
+	input->rs = 0;
+	input->rt = 0;
         input->op1 = 0;
         input->op2 = 0;
         input->write_reg = 0;
