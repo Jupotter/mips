@@ -1,0 +1,6 @@
+addi 10 5 20
+subi 5 5 3
+j -1
+nop 0
+nop 0
+nop 0
