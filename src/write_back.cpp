@@ -17,6 +17,8 @@ Interstage* WriteBack::process(Interstage* input)
     _contexte.getCoutMutex().unlock();
     #endif
 
+    _contexte.setWBThreadState(false);
+
     if (!input->memoryWrite)
     {
         _contexte
@@ -33,6 +35,7 @@ Interstage* WriteBack::process(Interstage* input)
     }
 
     _contexte.endCycle();
+    _contexte.setWBThreadState(true);
     while (_contexte.cycleEnded() == false);
 
     delete input;

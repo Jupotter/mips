@@ -102,6 +102,32 @@ void Context::endCycle()
     _mutex->unlock();
 }
 
+bool Context::isMEMThreadFinished()
+{
+  if (_is_MEM_thread_finished)
+    {
+      _is_MEM_thread_finished = false;
+      return true;
+    }
+
+  return _is_MEM_thread_finished;
+}
+
+bool Context::isWBThreadFinished()
+{
+  return _is_WB_thread_finished;
+}
+
+void Context::setMEMThreadState(bool state)
+{
+  _is_MEM_thread_finished = state;
+}
+
+void Context::setWBThreadState(bool state)
+{
+  _is_WB_thread_finished = state;
+}
+
 bool Context::cycleEnded()
 {
     _mutex->lock();

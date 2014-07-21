@@ -38,6 +38,9 @@ class Context
 
         PipelineStage* _stages[5];
 
+        bool _is_MEM_thread_finished = false;
+        bool _is_WB_thread_finished = false;
+
         void reset_no_lock();
 
     public:
@@ -55,6 +58,11 @@ class Context
         bool isReset();
         void endCycle();
         bool cycleEnded();
+
+        bool isMEMThreadFinished();
+        bool isWBThreadFinished();
+        void setMEMThreadState(bool state);
+        void setWBThreadState(bool state);
 
         StageNumber getStalledStage() const;
         void stall(StageNumber stage);
