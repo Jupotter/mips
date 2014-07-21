@@ -46,4 +46,6 @@ Interstage* Execution::process(Interstage* input)
 
 Execution::Execution(Context& context)
     : PipelineStage(context)
-{ }
+{
+    _contexte.registerStage(this, EXS);
+}

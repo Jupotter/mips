@@ -6,6 +6,7 @@ InstructionFetch::InstructionFetch(std::istream& file, Context& context)
 {
     std::string* line = new std::string("nop 0");
     _history.push_back(line);
+    _contexte.registerStage(this, IFS);
 }
 
 Interstage* InstructionFetch::process(Interstage* input)

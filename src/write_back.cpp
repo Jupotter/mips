@@ -4,7 +4,9 @@
 
     WriteBack::WriteBack(Context& context)
 : PipelineStage(context)
-{ }
+{
+    _contexte.registerStage(this, WBS);
+}
 
 
 Interstage* WriteBack::process(Interstage* input)

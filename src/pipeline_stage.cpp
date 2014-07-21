@@ -2,17 +2,23 @@
 
 p::pipeline* PipelineStage::PIPELINE = NULL;
 
+void PipelineStage::SetPipeline(p::pipeline* p)
+{
+    PIPELINE = p;
+}
+
 PipelineStage::PipelineStage(Context& contexte)
     : _contexte(contexte)
 { }
 
 void* PipelineStage::operator()(void* input)
 {
-    Interstage* ret = process((Interstage*)input);
+    _in_interstage = (Interstage*)input;
+    Interstage* ret = process(_in_interstage);
     return ret;
 }
 
-void PipelineStage::SetPipeline(p::pipeline* p)
+Interstage* PipelineStage::getInterstage()
 {
-    PIPELINE = p;
+    return _in_interstage;
 }

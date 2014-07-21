@@ -1,5 +1,6 @@
 #include "context.hh"
 #include <istream>
+#include "pipeline_stage.hh"
 
 int Context::getInstructionCount() const
 {
@@ -72,6 +73,16 @@ bool Context::isReset()
     }
     _mutex->unlock();
     return false;
+}
+
+Interstage* Context::getInterstage(StageNumber stage)
+{
+    return _stages[stage]->getInterstage();
+}
+
+void Context::registerStage(PipelineStage* stage, StageNumber number)
+{
+    _stages[number] = stage;
 }
 
 Context::Context()

@@ -2,7 +2,9 @@
 
 MemoryStage::MemoryStage(Context& context)
     : PipelineStage(context)
-{ }
+{
+    _contexte.registerStage(this, MEMS);
+}
 
 Interstage* MemoryStage::process(Interstage* input)
 {
