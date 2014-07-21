@@ -27,6 +27,7 @@ Interstage* MemoryStage::process(Interstage* input)
     }
 
     _contexte.endCycle();
+    _contexte.setMEMThreadState(true);
     while (_contexte.cycleEnded() == false);
 
     return input;
