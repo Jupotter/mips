@@ -115,6 +115,12 @@ bool Context::isMEMThreadFinished()
 
 bool Context::isWBThreadFinished()
 {
+  if (_is_WB_thread_finished)
+    {
+      _is_WB_thread_finished = false;
+      return true;
+    }
+
   return _is_WB_thread_finished;
 }
 
