@@ -10,6 +10,8 @@ enum Operations
     EQ,
     NEQ,
     NOP,
+    OR,
+    AND,
 };
 
 #endif /* !OPERATIONS_HH */

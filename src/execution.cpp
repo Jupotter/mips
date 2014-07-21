@@ -72,6 +72,12 @@ Interstage* Execution::process(Interstage* input)
         case NEQ:
             result = op1 != op2;
             break;
+        case OR:
+	    result = op1 | op2;
+	    break;
+        case AND:
+	    result = op1 & op2;
+	    break;
         default:
             result = 0;
             break;

@@ -110,6 +110,26 @@ void InstructionDecode::decodeOperation(std::string& operation, Interstage* inpu
         if (!_stalled)
             _contexte.stall(EXS);
     }
+    else if (operation.compare("OR") == 0)
+    {
+	_type = R_TYPE;
+	_op = OR;
+    }
+    else if (operation.compare("ORI") == 0)
+    {
+        _type = I_TYPE;
+        _op = OR;
+    }
+    else if (operation.compare("AND") == 0)
+    {
+        _type = R_TYPE;
+        _op = AND;
+    }
+    else if (operation.compare("ANDI") == 0)
+    {
+        _type = I_TYPE;
+	_op = AND;
+    }
     else
     {
         std::cerr << "Error, unkown operation " << operation << std::endl;
