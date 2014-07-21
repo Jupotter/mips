@@ -45,6 +45,8 @@ int main(int argc, char* argv[])
     pipeline.run();
 
     context->getRegisters().dump();
+    memoryStage.dump();
+
     int cycles = pipeline.t_get() - 1;
     int instructions = context->getInstructionCount();
     std::cout

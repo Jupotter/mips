@@ -10,10 +10,12 @@
 Interstage* WriteBack::process(Interstage* input)
 {
     while (_contexte.isReset() == false);
+    #ifdef DEBUG
     _contexte.getCoutMutex().lock();
     std::cout
         << PIPELINE->t_get() << ":WB:" << *input->instruction << std::endl;
     _contexte.getCoutMutex().unlock();
+    #endif
 
     if (!input->memoryWrite)
     {

@@ -11,6 +11,7 @@ class MemoryStage : public PipelineStage
 
     public:
         MemoryStage(Context& context);
+        void dump(void);
 };
 
 #endif /* !MEMORY_STAGE_HH */
