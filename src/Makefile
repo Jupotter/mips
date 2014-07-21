@@ -1,6 +1,6 @@
 
 PRG=mips
-SRC=test_pipeline.cpp pipeline_stage.cpp context.cpp instruction_fetch.cpp \
+SRC=main.cpp pipeline_stage.cpp context.cpp instruction_fetch.cpp \
     execution.cpp memory_stage.cpp write_back.cpp instruction_decode.cpp \
     register.cpp register_file.cpp pipeline.cpp
 
@@ -21,10 +21,10 @@ $(PRG) : $(OBJ)
 	$(CXX) $(CXXFLAGS) $(addprefix -L, $(LIBDIR)) \
 	    $^ -o $@ $(LDFLAGS)
 
-objs/%.o : %.c | objs
+objs/%.o : %.c Makefile | objs
 	$(CC) $(CFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o $@
 
-objs/%.o : %.cpp | objs
+objs/%.o : %.cpp Makefile | objs
 	$(CXX) $(CXXFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o $@
 
 objs :
