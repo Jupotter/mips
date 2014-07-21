@@ -24,10 +24,13 @@ class Context
         int _instruction_count = 0;
         int _cycle_count = 0;
         unsigned int _pc = 1;
+        bool _pc_changed;
         RegisterFile* _registers;
         bool _reset = false;
         bool _ended = false;
         int _reset_check = 0;
+        int _cycles_ended = 0;
+        int _cycles_since_end = 0;
         std::mutex* _mutex;
 
         PipelineStage* _stages[5];
@@ -35,10 +38,10 @@ class Context
         void reset_no_lock();
 
     public:
-        bool pc_changed;
 
         int getInstructionCount() const;
         void endInstruction();
+        bool getPCChanged() const;
         unsigned int getPC() const;
         void setPC(unsigned int value);
         RegisterFile& getRegisters() const;
@@ -47,6 +50,8 @@ class Context
         void reset();
         void end();
         bool isReset();
+        void endCycle();
+        bool cycleEnded();
 
         void stall(unsigned int number);
         Interstage* getInterstage(StageNumber stage);

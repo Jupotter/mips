@@ -7,6 +7,8 @@ enum Operations
     SUB,
     LW,
     SW,
+    EQ,
+    NEQ,
     NOP,
 };
 

@@ -76,6 +76,18 @@ void InstructionDecode::decodeOperation(std::string& operation, Interstage* inpu
         _op = NOP;
         _jump = true;
     }
+    else if (operation.compare("BEQ") == 0)
+    {
+        _type = I_TYPE;
+        _op = EQ;
+        _jump = true;
+    }
+    else if (operation.compare("BNEQ") == 0)
+    {
+        _type = I_TYPE;
+        _op = NEQ;
+        _jump = true;
+    }
     else if (operation.compare("NOP") == 0)
     {
         _type = J_TYPE;
@@ -144,8 +156,34 @@ Interstage* InstructionDecode::process(Interstage* input)
         input->op1 = 0;
         input->op2 = 0;
         input->write_reg = 0;
-        input->jump = _jump;
     }
+    input->jump = _jump;
+
+    /* special jump circuit */
+    while (!_contexte.getPCChanged());
+    if (input->jump)
+    {
+        bool cond;
+        switch (input->op)
+        {
+            case EQ:
+                cond = input->op1 == input->data;
+                break;
+            case NEQ:
+                cond = input->op1 != input->data;
+                break;
+            default:
+                cond = true;
+                break;
+        }
+
+        input->pc += input->immed;
+        if (cond)
+            _contexte.setPC(input->pc);
+    }
+
+    _contexte.endCycle();
+    while (_contexte.cycleEnded() == false);
 
     return input;
 }

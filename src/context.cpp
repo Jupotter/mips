@@ -12,6 +12,11 @@ void Context::endInstruction()
     _instruction_count++;
 }
 
+bool Context::getPCChanged() const
+{
+    return _pc_changed || _ended;
+}
+
 unsigned int Context::getPC() const
 {
     return _pc;
@@ -20,9 +25,9 @@ unsigned int Context::getPC() const
 void Context::setPC(unsigned int value)
 {
     while (_reset_check < (RESET_CHECK_NUM < _cycle_count
-                ? RESET_CHECK_NUM : _cycle_count) - 1);
+                ? RESET_CHECK_NUM : _cycle_count) - (1 + _cycles_since_end));
     _reset = false;
-    pc_changed = true;
+    _pc_changed = true;
     _pc = value;
 }
 
@@ -40,6 +45,7 @@ void Context::end()
 {
     _mutex->lock();
     _ended = true;
+    _cycles_since_end++;
     _mutex->unlock();
 }
 
@@ -52,9 +58,10 @@ void Context::reset()
 
 void Context::reset_no_lock()
 {
-    pc_changed = false;
+    _pc_changed = false;
     _reset_check = 0;
     _cycle_count++;
+    _cycles_ended = 0;
     _reset = true;
 }
 
@@ -64,6 +71,7 @@ bool Context::isReset()
     if (_ended && !_reset)
     {
         reset_no_lock();
+        _cycles_since_end++;
     }
     if (_reset)
     {
@@ -73,6 +81,24 @@ bool Context::isReset()
     }
     _mutex->unlock();
     return false;
+}
+
+void Context::endCycle()
+{
+    while (_reset_check < (RESET_CHECK_NUM < _cycle_count
+                ? RESET_CHECK_NUM : _cycle_count) - (1 + _cycles_since_end));
+    _mutex->lock();
+    _cycles_ended++;
+    _mutex->unlock();
+}
+
+bool Context::cycleEnded()
+{
+    _mutex->lock();
+    bool ret = _cycles_ended > (RESET_CHECK_NUM < _cycle_count
+                ? RESET_CHECK_NUM : _cycle_count) - (1 + _cycles_since_end);
+    _mutex->unlock();
+    return ret;
 }
 
 Interstage* Context::getInterstage(StageNumber stage)
