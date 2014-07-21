@@ -33,6 +33,10 @@ Interstage* WriteBack::process(Interstage* input)
             .getRegister(input->write_reg)
             ->store(input->data);
     }
+
+    _contexte.endCycle();
+    while (_contexte.cycleEnded() == false);
+
     delete input;
 
     _contexte.endInstruction();

@@ -140,5 +140,8 @@ Interstage* InstructionDecode::process(Interstage* input)
         input->jump = _jump;
     }
 
+    _contexte.endCycle();
+    while (_contexte.cycleEnded() == false);
+
     return input;
 }

@@ -37,11 +37,15 @@ Interstage* Execution::process(Interstage* input)
     }
     input->pc += input->immed;
     input->result = result;
-    return input;
 
-    while (_contexte.pc_changed == false);
+//    while (_contexte.pc_changed == false);
     if (input->jump)
         _contexte.setPC(input->pc);
+
+    _contexte.endCycle();
+    while (_contexte.cycleEnded() == false);
+
+    return input;
 }
 
 Execution::Execution(Context& context)

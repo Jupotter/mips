@@ -20,6 +20,8 @@ Interstage* InstructionFetch::process(Interstage* input)
         line = new std::string();
         if (0 == std::getline(_file, *line))
         {
+            _contexte.endCycle();
+            while (_contexte.cycleEnded() == false);
             _contexte.end();
             return (Interstage*)p::latch::terminate;
         }
@@ -41,6 +43,10 @@ Interstage* InstructionFetch::process(Interstage* input)
     _contexte.setPC(pc + 1);
     ret->instruction = line;
     ret->jump = false;
+
+    _contexte.endCycle();
+    while (_contexte.cycleEnded() == false);
+
     return ret;
 }
 

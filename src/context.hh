@@ -28,6 +28,8 @@ class Context
         bool _reset = false;
         bool _ended = false;
         int _reset_check = 0;
+        int _cycles_ended = 0;
+        int _cycles_since_end = 0;
         std::mutex* _mutex;
 
         PipelineStage* _stages[5];
@@ -47,6 +49,8 @@ class Context
         void reset();
         void end();
         bool isReset();
+        void endCycle();
+        bool cycleEnded();
 
         void stall(unsigned int number);
         Interstage* getInterstage(StageNumber stage);

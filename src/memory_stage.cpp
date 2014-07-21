@@ -20,10 +20,15 @@ Interstage* MemoryStage::process(Interstage* input)
     {
         // input->op2 == input->data
         _memory[input->result] = input->data;
-        return input;
+    }
+    else
+    {
+        input->data = _memory[input->result % 1024];
     }
 
-    input->data = _memory[input->result % 1024];
+    _contexte.endCycle();
+    while (_contexte.cycleEnded() == false);
+
     return input;
 }
 
