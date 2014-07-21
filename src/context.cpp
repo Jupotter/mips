@@ -110,7 +110,7 @@ bool Context::isMEMThreadFinished()
       return true;
     }
 
-  return _is_MEM_thread_finished;
+  return false;
 }
 
 bool Context::isWBThreadFinished()
@@ -121,7 +121,7 @@ bool Context::isWBThreadFinished()
       return true;
     }
 
-  return _is_WB_thread_finished;
+  return false;
 }
 
 void Context::setMEMThreadState(bool state)

@@ -14,8 +14,10 @@ bool ForwardingUnit::forward_mem_op1()
         test1 = test1;
         test2 = test2;
 
+        _contexte.getCoutMutex().lock();
         std::cout << "EXS->rs : " << test1 << std::endl;
         std::cout << "MEMS->rt : " << test2 << std::endl << std::endl;
+        _contexte.getCoutMutex().unlock();
 
         return (!_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&
@@ -35,8 +37,10 @@ bool ForwardingUnit::forward_mem_op2()
         test1 = test1;
         test2 = test2;
 
+        _contexte.getCoutMutex().lock();
         std::cout << "EXS->rs : " << test1 << std::endl;
         std::cout << "MEMS->rt : " << test2 << std::endl << std::endl;
+        _contexte.getCoutMutex().unlock();
 
         return (_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&
@@ -56,8 +60,10 @@ bool ForwardingUnit::forward_wb_op1()
         test1 = test1;
         test2 = test2;
 
+        _contexte.getCoutMutex().lock();
         std::cout << "EXS->rs : " << test1 << std::endl;
         std::cout << "WBS->rt : " << test2 << std::endl << std::endl;
+        _contexte.getCoutMutex().unlock();
 
         return (_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&
@@ -77,8 +83,10 @@ bool ForwardingUnit::forward_wb_op2()
         test1 = test1;
         test2 = test2;
 
+        _contexte.getCoutMutex().lock();
         std::cout << "EXS->rs : " << test1 << std::endl;
         std::cout << "WBS->rt : " << test2 << std::endl << std::endl;
+        _contexte.getCoutMutex().unlock();
 
         return (_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&

@@ -30,7 +30,6 @@ void* PipelineStage::operator()(void* input)
     }
 
     _stalled = false;
-    _interstage = NULL;
     return ret;
 }
 

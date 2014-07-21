@@ -1,19 +1,19 @@
 #include "execution.hh"
 
-Execution::Execution(Context& context)
-    : PipelineStage(context, EXS)
+    Execution::Execution(Context& context)
+: PipelineStage(context, EXS)
 { }
 
 Interstage* Execution::process(Interstage* input)
 {
     while (_contexte.isReset() == false);
 
-    #ifdef DEBUG
+#ifdef DEBUG
     _contexte.getCoutMutex().lock();
     std::cout
         << PIPELINE->t_get() << ":EXE: " << *input->instruction << std::endl;
     _contexte.getCoutMutex().unlock();
-    #endif
+#endif
 
     int op1;
     int op2;
@@ -24,33 +24,41 @@ Interstage* Execution::process(Interstage* input)
     int result = 0;
 
     while (_contexte.getInterstage(MEMS) != 0
-	   && (!_contexte.isMEMThreadFinished()));
+            && (!_contexte.isMEMThreadFinished()));
     while (_contexte.getInterstage(WBS) != 0
-	   && (!_contexte.isWBThreadFinished()));
+            && (!_contexte.isWBThreadFinished()));
 
     op1 = input->op1;
     if (fu.forward_mem_op1())
-      {
-	op1 = fu.getMEMreg();
-	std::cout << "FwUnit : op1 override by mem_rt" << std::endl;
-      }
-    if (fu.forward_wb_op1())
-      {
-	op1 = fu.getWBreg();
-	std::cout << "FwUnit : op1 override by wb_rt" << std::endl;
-      }
+    {
+        op1 = fu.getMEMreg();
+        _contexte.getCoutMutex().lock();
+        std::cout << "FwUnit : op1 override by mem_rt" << std::endl;
+        _contexte.getCoutMutex().unlock();
+    }
+    else if (fu.forward_wb_op1())
+    {
+        op1 = fu.getWBreg();
+        _contexte.getCoutMutex().lock();
+        std::cout << "FwUnit : op1 override by wb_rt" << std::endl;
+        _contexte.getCoutMutex().unlock();
+    }
 
     op2 = input->op2;
     if (!input->immed && fu.forward_mem_op2())
-      {
-	op2 = fu.getMEMreg();
-       	std::cout << "FwUnit : op2 override by mem_rt" << std::endl;
-      }
-    if (!input->immed && fu.forward_wb_op2())
-      {
-	op2 = fu.getWBreg();
-	std::cout << "FwUnit : op2 override by wb_rt" << std::endl;
-      }
+    {
+        op2 = fu.getMEMreg();
+        _contexte.getCoutMutex().lock();
+        std::cout << "FwUnit : op2 override by mem_rt" << std::endl;
+        _contexte.getCoutMutex().unlock();
+    }
+    else if (!input->immed && fu.forward_wb_op2())
+    {
+        op2 = fu.getWBreg();
+        _contexte.getCoutMutex().lock();
+        std::cout << "FwUnit : op2 override by wb_rt" << std::endl;
+        _contexte.getCoutMutex().unlock();
+    }
 
     switch (op)
     {
@@ -73,11 +81,11 @@ Interstage* Execution::process(Interstage* input)
             result = op1 != op2;
             break;
         case OR:
-	    result = op1 | op2;
-	    break;
+            result = op1 | op2;
+            break;
         case AND:
-	    result = op1 & op2;
-	    break;
+            result = op1 & op2;
+            break;
         default:
             result = 0;
             break;
