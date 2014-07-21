@@ -7,18 +7,34 @@ void PipelineStage::SetPipeline(p::pipeline* p)
     PIPELINE = p;
 }
 
-PipelineStage::PipelineStage(Context& contexte)
-    : _contexte(contexte)
-{ }
+PipelineStage::PipelineStage(Context& contexte, StageNumber type)
+    : _contexte(contexte), _type(type)
+{
+    _contexte.registerStage(this, type);
+}
 
 void* PipelineStage::operator()(void* input)
 {
-    _in_interstage = (Interstage*)input;
-    Interstage* ret = process(_in_interstage);
+    if (!_stalled)
+        _interstage = (Interstage*)input;
+
+    Interstage* ret = process(_interstage);
+
+    StageNumber stall = _contexte.getStalledStage();
+    if (stall != NONES && stall >= _type)
+    {
+        _stalled = true;
+        if (stall == _type)
+            return p::latch::noop;
+        return ret;
+    }
+
+    _stalled = false;
+    _interstage = NULL;
     return ret;
 }
 
 Interstage* PipelineStage::getInterstage()
 {
-    return _in_interstage;
+    return _interstage;
 }

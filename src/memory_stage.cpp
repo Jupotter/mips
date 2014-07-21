@@ -1,10 +1,8 @@
 #include "memory_stage.hh"
 
 MemoryStage::MemoryStage(Context& context)
-    : PipelineStage(context)
-{
-    _contexte.registerStage(this, MEMS);
-}
+    : PipelineStage(context, MEMS)
+{ }
 
 Interstage* MemoryStage::process(Interstage* input)
 {

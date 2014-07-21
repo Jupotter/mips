@@ -2,17 +2,19 @@
 #include "instruction_fetch.hh"
 
 InstructionFetch::InstructionFetch(std::istream& file, Context& context)
-    : PipelineStage(context), _file(file)
+    : PipelineStage(context, IFS), _file(file)
 {
     std::string* line = new std::string("nop 0");
     _history.push_back(line);
-    _contexte.registerStage(this, IFS);
 }
 
 Interstage* InstructionFetch::process(Interstage* input)
 {
+    std::cout << "---" << std::endl;
     _contexte.reset();
     unsigned int pc = _contexte.getPC();
+    if (_stalled)
+        pc--;
     std::string* line;
 
     while (pc >= _history.size())

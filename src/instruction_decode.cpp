@@ -9,10 +9,8 @@
 #include "operations.hh"
 
 InstructionDecode::InstructionDecode(Context& context)
-    : PipelineStage(context)
-{
-    _contexte.registerStage(this, IDS);
-}
+    : PipelineStage(context, IDS)
+{ }
 
 std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
     std::stringstream ss(s);
@@ -100,6 +98,13 @@ void InstructionDecode::decodeOperation(std::string& operation, Interstage* inpu
         _type = I_TYPE;
         _op = SW;
         input->memoryWrite = true;
+    }
+    else if (operation.compare("STALL") == 0)
+    {
+        _type = J_TYPE;
+        _op = NOP;
+        if (!_stalled)
+            _contexte.stall(EXS);
     }
     else
     {
