@@ -1,8 +1,9 @@
 #ifndef INSTRUCTION_DECODE_HH
 # define INSTRUCTION_DECODE_HH
 
-#include "pipeline_stage.hh"
 #include <string>
+#include "pipeline_stage.hh"
+#include "hazard_unit.hh"
 
 enum InstructionType
 {
@@ -20,7 +21,7 @@ class InstructionDecode : public PipelineStage
         bool _jump;
         void decodeOperation(std::string& operation, Interstage* input);
         Interstage* process(Interstage* input);
-
+        HazardUnit _hazard_unit;
 
     public:
         InstructionDecode(Context& context);

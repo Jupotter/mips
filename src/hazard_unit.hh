@@ -11,7 +11,7 @@ class HazardUnit
     public:
         HazardUnit(Context& context);
 
-        bool checkHazard(Interstage& interstage);
+        bool checkHazard();
 };
 
 #endif /* !HAZARD_UNIT_HH */

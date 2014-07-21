@@ -9,7 +9,7 @@
 #include "operations.hh"
 
 InstructionDecode::InstructionDecode(Context& context)
-    : PipelineStage(context, IDS)
+    : PipelineStage(context, IDS), _hazard_unit(context)
 { }
 
 std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
@@ -48,25 +48,25 @@ void InstructionDecode::decodeOperation(std::string& operation, Interstage* inpu
     {
         _type = R_TYPE;
         _op= ADD;
-	input->writeData = true;
+	input->writeData = false;
     }
     else if (operation.compare("ADDI") == 0)
     {
         _type = I_TYPE;
         _op= ADD;
-	input->writeData = true;
+	input->writeData = false;
     }
     else if (operation.compare("SUB") == 0)
     {
         _type = R_TYPE;
         _op= SUB;
-	input->writeData = true;
+	input->writeData = false;
     }
     else if (operation.compare("SUBI") == 0)
     {
         _type = I_TYPE;
         _op= SUB;
-	input->writeData = true;
+	input->writeData = false;
     }
     else if (operation.compare("J") == 0)
     {
@@ -163,6 +163,16 @@ Interstage* InstructionDecode::process(Interstage* input)
         input->write_reg = 0;
     }
     input->jump = _jump;
+
+    /* check for hazard */
+    if (_hazard_unit.checkHazard() && !_stalled)
+    {
+        _contexte.getCoutMutex().lock();
+        std::cout << "detected a hazard, stalling" << std::endl;
+        _contexte.getCoutMutex().unlock();
+
+        _contexte.stall(IDS);
+    }
 
     /* special jump circuit */
     while (!_contexte.getPCChanged());
