@@ -75,10 +75,10 @@ Interstage* Execution::process(Interstage* input)
             result = op1 + op2;
             break;
         case EQ:
-            result = op1 == op2;
+            result = op1;
             break;
         case NEQ:
-            result = op1 != op2;
+            result = op1;
             break;
         case OR:
             result = op1 | op2;

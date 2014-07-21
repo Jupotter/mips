@@ -19,7 +19,7 @@ Interstage* WriteBack::process(Interstage* input)
 
     _contexte.setWBThreadState(false);
 
-    if (!input->memoryWrite)
+    if (!input->memoryWrite && !input->jump)
     {
         _contexte
             .getRegisters()
