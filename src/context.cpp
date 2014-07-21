@@ -12,6 +12,11 @@ void Context::endInstruction()
     _instruction_count++;
 }
 
+bool Context::getPCChanged() const
+{
+    return _pc_changed || _ended;
+}
+
 unsigned int Context::getPC() const
 {
     return _pc;
@@ -22,7 +27,7 @@ void Context::setPC(unsigned int value)
     while (_reset_check < (RESET_CHECK_NUM < _cycle_count
                 ? RESET_CHECK_NUM : _cycle_count) - (1 + _cycles_since_end));
     _reset = false;
-    pc_changed = true;
+    _pc_changed = true;
     _pc = value;
 }
 
@@ -53,7 +58,7 @@ void Context::reset()
 
 void Context::reset_no_lock()
 {
-    pc_changed = false;
+    _pc_changed = false;
     _reset_check = 0;
     _cycle_count++;
     _cycles_ended = 0;

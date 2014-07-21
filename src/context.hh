@@ -24,6 +24,7 @@ class Context
         int _instruction_count = 0;
         int _cycle_count = 0;
         unsigned int _pc = 1;
+        bool _pc_changed;
         RegisterFile* _registers;
         bool _reset = false;
         bool _ended = false;
@@ -37,10 +38,10 @@ class Context
         void reset_no_lock();
 
     public:
-        bool pc_changed;
 
         int getInstructionCount() const;
         void endInstruction();
+        bool getPCChanged() const;
         unsigned int getPC() const;
         void setPC(unsigned int value);
         RegisterFile& getRegisters() const;

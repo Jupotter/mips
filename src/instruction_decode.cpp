@@ -140,6 +140,14 @@ Interstage* InstructionDecode::process(Interstage* input)
         input->jump = _jump;
     }
 
+    /* special jump circuit */
+    while (!_contexte.getPCChanged());
+    if (input->jump)
+    {
+        input->pc += input->immed;
+        _contexte.setPC(input->pc);
+    }
+
     _contexte.endCycle();
     while (_contexte.cycleEnded() == false);
 
