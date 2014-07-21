@@ -19,6 +19,11 @@ Interstage* Execution::process(Interstage* input)
 
     int result = 0;
 
+    while (_contexte.getInterstage(MEMS) != 0
+	   && (!_contexte.isMEMThreadFinished()));
+    while (_contexte.getInterstage(WBS) != 0
+	   && (!_contexte.isWBThreadFinished()));
+
     if (fu.forward_mem_op1())
       {
 	op1 = fu.getMEMreg();
