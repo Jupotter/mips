@@ -31,6 +31,12 @@ Interstage* Execution::process(Interstage* input)
         case SW:
             result = op1 + op2;
             break;
+        case EQ:
+            result = op1 == op2;
+            break;
+        case NEQ:
+            result = op1 != op2;
+            break;
         default:
             result = 0;
             break;

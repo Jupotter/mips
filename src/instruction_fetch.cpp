@@ -20,6 +20,7 @@ Interstage* InstructionFetch::process(Interstage* input)
         line = new std::string();
         if (0 == std::getline(_file, *line))
         {
+            _contexte.setPC(pc + 1);
             _contexte.endCycle();
             while (_contexte.cycleEnded() == false);
             _contexte.end();
