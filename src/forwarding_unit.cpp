@@ -8,6 +8,7 @@ bool ForwardingUnit::forward_mem_op1()
 {
     if (_contexte.getInterstage(MEMS) != 0)
     {
+        #ifdef DEBUG
         int test1 = _contexte.getInterstage(EXS)->rs;
         int test2 = _contexte.getInterstage(MEMS)->rt;
 
@@ -18,6 +19,7 @@ bool ForwardingUnit::forward_mem_op1()
         std::cout << "EXS->rs : " << test1 << std::endl;
         std::cout << "MEMS->rt : " << test2 << std::endl << std::endl;
         _contexte.getCoutMutex().unlock();
+	#endif
 
         return (!_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&
@@ -31,6 +33,7 @@ bool ForwardingUnit::forward_mem_op2()
 {
     if (_contexte.getInterstage(MEMS) != 0)
     {
+        #ifdef DEBUG
         int test1 = _contexte.getInterstage(EXS)->rs;
         int test2 = _contexte.getInterstage(MEMS)->rt;
 
@@ -41,6 +44,7 @@ bool ForwardingUnit::forward_mem_op2()
         std::cout << "EXS->rs : " << test1 << std::endl;
         std::cout << "MEMS->rt : " << test2 << std::endl << std::endl;
         _contexte.getCoutMutex().unlock();
+	#endif
 
         return (_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&
@@ -54,6 +58,7 @@ bool ForwardingUnit::forward_wb_op1()
 {
     if (_contexte.getInterstage(WBS) != 0)
     {
+        #ifdef DEBUG
         int test1 = _contexte.getInterstage(EXS)->rs;
         int test2 = _contexte.getInterstage(WBS)->rt;
 
@@ -64,6 +69,7 @@ bool ForwardingUnit::forward_wb_op1()
         std::cout << "EXS->rs : " << test1 << std::endl;
         std::cout << "WBS->rt : " << test2 << std::endl << std::endl;
         _contexte.getCoutMutex().unlock();
+	#endif
 
         return (_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&
@@ -77,6 +83,7 @@ bool ForwardingUnit::forward_wb_op2()
 {
     if (_contexte.getInterstage(WBS) != 0)
     {
+        #ifdef DEBUG
         int test1 = _contexte.getInterstage(EXS)->rs;
         int test2 = _contexte.getInterstage(WBS)->rt;
 
@@ -87,6 +94,7 @@ bool ForwardingUnit::forward_wb_op2()
         std::cout << "EXS->rs : " << test1 << std::endl;
         std::cout << "WBS->rt : " << test2 << std::endl << std::endl;
         _contexte.getCoutMutex().unlock();
+	#endif
 
         return (_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&

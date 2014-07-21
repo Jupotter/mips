@@ -32,32 +32,40 @@ Interstage* Execution::process(Interstage* input)
     if (fu.forward_mem_op1())
     {
         op1 = fu.getMEMreg();
-        _contexte.getCoutMutex().lock();
+        #ifdef DEBUG
+	_contexte.getCoutMutex().lock();
         std::cout << "FwUnit : op1 override by mem_rt" << std::endl;
         _contexte.getCoutMutex().unlock();
+	#endif
     }
     else if (fu.forward_wb_op1())
     {
         op1 = fu.getWBreg();
+	#ifdef DEBUG
         _contexte.getCoutMutex().lock();
         std::cout << "FwUnit : op1 override by wb_rt" << std::endl;
         _contexte.getCoutMutex().unlock();
+	#endif
     }
 
     op2 = input->op2;
     if (!input->immed && fu.forward_mem_op2())
     {
         op2 = fu.getMEMreg();
-        _contexte.getCoutMutex().lock();
+        #ifdef DEBUG
+	_contexte.getCoutMutex().lock();
         std::cout << "FwUnit : op2 override by mem_rt" << std::endl;
         _contexte.getCoutMutex().unlock();
+	#endif
     }
     else if (!input->immed && fu.forward_wb_op2())
     {
         op2 = fu.getWBreg();
-        _contexte.getCoutMutex().lock();
+        #ifdef DEBUG
+	_contexte.getCoutMutex().lock();
         std::cout << "FwUnit : op2 override by wb_rt" << std::endl;
         _contexte.getCoutMutex().unlock();
+	#endif
     }
 
     switch (op)
