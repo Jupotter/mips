@@ -10,7 +10,7 @@ class Context;
 class PipelineStage
 {
     private:
-        Interstage* _in_interstage;
+        Interstage* _interstage;
 
         virtual Interstage* process(Interstage* input) = 0;
 
@@ -18,11 +18,13 @@ class PipelineStage
         static p::pipeline* PIPELINE;
 
         Context& _contexte;
+        StageNumber _type;
+        bool _stalled = false;
 
     public:
         static void SetPipeline(p::pipeline* p);
 
-        PipelineStage(Context& contexte);
+        PipelineStage(Context& contexte, StageNumber type);
 
         void* operator()(void* input);
         Interstage* getInterstage();

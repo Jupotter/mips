@@ -1,5 +1,9 @@
 #include "execution.hh"
 
+Execution::Execution(Context& context)
+    : PipelineStage(context, EXS)
+{ }
+
 Interstage* Execution::process(Interstage* input)
 {
     while (_contexte.isReset() == false);
@@ -82,8 +86,3 @@ Interstage* Execution::process(Interstage* input)
     return input;
 }
 
-Execution::Execution(Context& context)
-    : PipelineStage(context)
-{
-    _contexte.registerStage(this, EXS);
-}

@@ -9,6 +9,7 @@ class Interstage;
 
 enum StageNumber
 {
+    NONES,
     IFS,
     IDS,
     EXS,
@@ -31,6 +32,8 @@ class Context
         int _reset_check = 0;
         int _cycles_ended = 0;
         int _cycles_since_end = 0;
+        StageNumber _stalled_stage = NONES;
+        int _stall_num;
         std::mutex* _mutex;
 
         PipelineStage* _stages[5];
@@ -61,7 +64,8 @@ class Context
         void setMEMThreadState(bool state);
         void setWBThreadState(bool state);
 
-        void stall(unsigned int number);
+        StageNumber getStalledStage() const;
+        void stall(StageNumber stage);
         Interstage* getInterstage(StageNumber stage);
 
         void registerStage(PipelineStage* stage, StageNumber number);

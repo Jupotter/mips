@@ -3,10 +3,8 @@
 #include <iostream>
 
     WriteBack::WriteBack(Context& context)
-: PipelineStage(context)
-{
-    _contexte.registerStage(this, WBS);
-}
+: PipelineStage(context, WBS)
+{ }
 
 
 Interstage* WriteBack::process(Interstage* input)

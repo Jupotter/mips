@@ -24,8 +24,9 @@ unsigned int Context::getPC() const
 
 void Context::setPC(unsigned int value)
 {
-    while (_reset_check < (RESET_CHECK_NUM < _cycle_count
-                ? RESET_CHECK_NUM : _cycle_count) - (1 + _cycles_since_end));
+    while (_reset_check 
+            < (RESET_CHECK_NUM < _cycle_count ? RESET_CHECK_NUM : _cycle_count)
+            - ((_stall_num != 0 ? 2 : 1) + _cycles_since_end));
     _reset = false;
     _pc_changed = true;
     _pc = value;
@@ -58,6 +59,14 @@ void Context::reset()
 
 void Context::reset_no_lock()
 {
+    if (_stalled_stage != NONES)
+        _stall_num = (int)_stalled_stage;
+    _stalled_stage = NONES;
+    if (_stall_num != 0)
+        _stall_num++;
+    if (_stall_num > WBS)
+        _stall_num = 0;
+
     _pc_changed = false;
     _reset_check = 0;
     _cycle_count++;
@@ -85,8 +94,9 @@ bool Context::isReset()
 
 void Context::endCycle()
 {
-    while (_reset_check < (RESET_CHECK_NUM < _cycle_count
-                ? RESET_CHECK_NUM : _cycle_count) - (1 + _cycles_since_end));
+    while (_reset_check <
+            (RESET_CHECK_NUM < _cycle_count ? RESET_CHECK_NUM : _cycle_count)
+            - ((_stall_num != 0 ? 2 : 1) + _cycles_since_end));
     _mutex->lock();
     _cycles_ended++;
     _mutex->unlock();
@@ -121,10 +131,21 @@ void Context::setWBThreadState(bool state)
 bool Context::cycleEnded()
 {
     _mutex->lock();
-    bool ret = _cycles_ended > (RESET_CHECK_NUM < _cycle_count
-                ? RESET_CHECK_NUM : _cycle_count) - (1 + _cycles_since_end);
+    bool ret = _cycles_ended >
+        (RESET_CHECK_NUM < _cycle_count ? RESET_CHECK_NUM : _cycle_count)
+        - ((_stall_num != 0 ? 2 : 1) + _cycles_since_end);
     _mutex->unlock();
     return ret;
+}
+
+StageNumber Context::getStalledStage() const
+{
+    return _stalled_stage;
+}
+
+void Context::stall(StageNumber stage)
+{
+    _stalled_stage = stage;
 }
 
 Interstage* Context::getInterstage(StageNumber stage)
