@@ -194,6 +194,7 @@ Interstage* InstructionDecode::process(Interstage* input)
         _contexte.stall(IDS);
     }
 
+#ifndef NO_DELAY_SLOT
     /* special jump circuit */
     while (!_contexte.getPCChanged());
     if (input->jump)
@@ -216,6 +217,7 @@ Interstage* InstructionDecode::process(Interstage* input)
         if (cond)
             _contexte.setPC(input->pc);
     }
+#endif
 
     _contexte.endCycle();
     while (_contexte.cycleEnded() == false);

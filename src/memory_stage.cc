@@ -14,6 +14,31 @@ Interstage* MemoryStage::process(Interstage* input)
     _contexte.getCoutMutex().unlock();
 #endif
 
+#ifdef NO_DELAY_SLOT
+    /* jump handling */
+    while (!_contexte.getPCChanged());
+    if (input->jump)
+    {
+        bool cond;
+        switch (input->op)
+        {
+            case EQ:
+                cond = input->op1 == input->data;
+                break;
+            case NEQ:
+                cond = input->op1 != input->data;
+                break;
+            default:
+                cond = true;
+                break;
+        }
+
+        input->pc += input->immed;
+        if (cond)
+            _contexte.setPC(input->pc);
+    }
+#endif
+
     if (input->memoryWrite)
     {
         // input->op2 == input->data
