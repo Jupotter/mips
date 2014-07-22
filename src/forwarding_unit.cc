@@ -7,24 +7,9 @@ ForwardingUnit::ForwardingUnit(Context& contexte)
 bool ForwardingUnit::forward_mem_op1()
 {
     if (_contexte.getInterstage(MEMS) != 0)
-    {
-        #ifdef DEBUG
-        int test1 = _contexte.getInterstage(EXS)->rs;
-        int test2 = _contexte.getInterstage(MEMS)->rt;
-
-        test1 = test1;
-        test2 = test2;
-
-        _contexte.getCoutMutex().lock();
-        std::cout << "EXS->rs : " << test1 << std::endl;
-        std::cout << "MEMS->rt : " << test2 << std::endl << std::endl;
-        _contexte.getCoutMutex().unlock();
-	#endif
-
         return (!_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&
                 (_contexte.getInterstage(EXS)->rs == _contexte.getInterstage(MEMS)->rt));
-    }
     else
         return false;
 }
@@ -32,24 +17,9 @@ bool ForwardingUnit::forward_mem_op1()
 bool ForwardingUnit::forward_mem_op2()
 {
     if (_contexte.getInterstage(MEMS) != 0)
-    {
-        #ifdef DEBUG
-        int test1 = _contexte.getInterstage(EXS)->rs;
-        int test2 = _contexte.getInterstage(MEMS)->rt;
-
-        test1 = test1;
-        test2 = test2;
-
-        _contexte.getCoutMutex().lock();
-        std::cout << "EXS->rs : " << test1 << std::endl;
-        std::cout << "MEMS->rt : " << test2 << std::endl << std::endl;
-        _contexte.getCoutMutex().unlock();
-	#endif
-
         return (_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&
                 (_contexte.getInterstage(EXS)->rt == _contexte.getInterstage(MEMS)->rt));
-    }
     else
         return false;
 }
@@ -57,49 +27,19 @@ bool ForwardingUnit::forward_mem_op2()
 bool ForwardingUnit::forward_wb_op1()
 {
     if (_contexte.getInterstage(WBS) != 0)
-    {
-        #ifdef DEBUG
-        int test1 = _contexte.getInterstage(EXS)->rs;
-        int test2 = _contexte.getInterstage(WBS)->rt;
-
-        test1 = test1;
-        test2 = test2;
-
-        _contexte.getCoutMutex().lock();
-        std::cout << "EXS->rs : " << test1 << std::endl;
-        std::cout << "WBS->rt : " << test2 << std::endl << std::endl;
-        _contexte.getCoutMutex().unlock();
-	#endif
-
         return (_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&
                 (_contexte.getInterstage(EXS)->rs == _contexte.getInterstage(WBS)->rt));
-    }
-  else
-    return false;
+    else
+        return false;
 }
 
 bool ForwardingUnit::forward_wb_op2()
 {
     if (_contexte.getInterstage(WBS) != 0)
-    {
-        #ifdef DEBUG
-        int test1 = _contexte.getInterstage(EXS)->rs;
-        int test2 = _contexte.getInterstage(WBS)->rt;
-
-        test1 = test1;
-        test2 = test2;
-
-        _contexte.getCoutMutex().lock();
-        std::cout << "EXS->rs : " << test1 << std::endl;
-        std::cout << "WBS->rt : " << test2 << std::endl << std::endl;
-        _contexte.getCoutMutex().unlock();
-	#endif
-
         return (_contexte.getInterstage(MEMS)->jump &&
                 !_contexte.getInterstage(MEMS)->memoryWrite &&
                 (_contexte.getInterstage(EXS)->rt == _contexte.getInterstage(WBS)->rt));
-    }
     else
         return false;
 }
