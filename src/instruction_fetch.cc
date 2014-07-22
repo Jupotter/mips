@@ -10,7 +10,11 @@ InstructionFetch::InstructionFetch(std::istream& file, Context& context)
 
 Interstage* InstructionFetch::process(Interstage* input)
 {
+#ifdef DEBUG
+    _contexte.getCoutMutex().lock();
     std::cout << "---" << std::endl;
+    _contexte.getCoutMutex().unlock();
+#endif
     _contexte.reset();
     unsigned int pc = _contexte.getPC();
     if (_stalled)
