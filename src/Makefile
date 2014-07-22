@@ -8,8 +8,8 @@ SRC=main.cc pipeline_stage.cc context.cc instruction_fetch.cc \
 INCLUDEDIR=../include/
 LIBDIR=../lib/
 
-CXXFLAGS=-std=c++11 -O0 -g -ggdb -Wall -Werror -Wl,--no-as-needed -DDEBUG
-LDFLAGS=-ltbb -lrt
+M_CXXFLAGS=-std=c++11 -O0 -g -ggdb -Wall -Werror -Wl,--no-as-needed $(CXXFLAGS)
+M_LDFLAGS=-ltbb -lrt $(LDFLAGS)
 
 CC=gcc
 CXX=g++
@@ -19,14 +19,14 @@ OBJ=$(addprefix objs/, $(notdir $(SRC:.cc=.o)))
 all : $(PRG)
 
 $(PRG) : $(OBJ)
-	$(CXX) $(CXXFLAGS) $(addprefix -L, $(LIBDIR)) \
-	    $^ -o $@ $(LDFLAGS)
+	$(CXX) $(M_CXXFLAGS) $(addprefix -L, $(LIBDIR)) \
+	    $^ -o $@ $(M_LDFLAGS)
 
 objs/%.o : %.c Makefile | objs
-	$(CC) $(CFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o $@
+	$(CC) $(M_CFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o $@
 
 objs/%.o : %.cc Makefile | objs
-	$(CXX) $(CXXFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o $@
+	$(CXX) $(M_CXXFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o $@
 
 objs :
 	mkdir -p objs
