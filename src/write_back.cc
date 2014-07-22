@@ -40,6 +40,7 @@ Interstage* WriteBack::process(Interstage* input)
 
     delete input;
 
+    if (input->op != NOP)
     _contexte.endInstruction();
 
 //    // DEBUG
