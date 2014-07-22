@@ -1,0 +1,7 @@
+addi 1 0 5
+nop 0
+nop 0
+sw 1 0 0
+nop 0
+nop 0
+lw 2 0 0

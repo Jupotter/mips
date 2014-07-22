@@ -1,0 +1,20 @@
+addi 1 0 8
+subi 1 1 1
+addi 2 2 1
+addi 3 3 1
+addi 4 4 1
+subi 1 1 1
+addi 2 2 1
+addi 3 3 1
+addi 4 4 1
+subi 1 1 1
+addi 2 2 1
+addi 3 3 1
+addi 4 4 1
+subi 1 1 1
+addi 2 2 1
+addi 3 3 1
+addi 4 4 1
+bneq 1 0 -17
+nop 0
+nop 0
