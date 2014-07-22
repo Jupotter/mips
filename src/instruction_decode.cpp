@@ -156,19 +156,19 @@ Interstage* InstructionDecode::process(Interstage* input)
 
     if (_type == R_TYPE)
     {
-        input->rs = std::stoi(tokens[1]);
+        input->rs = std::stoi(tokens[2]);
         input->op1 = _contexte.getRegisters().getRegister(input->rs)->load();
-        input->rt = std::stoi(tokens[2]);
+        input->rt = std::stoi(tokens[1]);
         input->op2 = _contexte.getRegisters().getRegister(input->rt)->load();
         input->write_reg = std::stoi(tokens[3]);
         input->immed = 0;
     }
     else if (_type == I_TYPE)
     {
-        input->rs = std::stoi(tokens[1]);
+        input->rs = std::stoi(tokens[2]);
         input->op1 = _contexte.getRegisters().getRegister(input->rs)->load();
-        input->write_reg = std::stoi(tokens[2]);
-	input->rt = std::stoi(tokens[2]);
+        input->write_reg = std::stoi(tokens[1]);
+	input->rt = std::stoi(tokens[1]);
         input->op2 = std::stoi(tokens[3]);
         input->immed = input->op2;
         input->data = _contexte.getRegisters().getRegister(input->write_reg)->load();

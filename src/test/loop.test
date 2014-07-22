@@ -1,7 +1,7 @@
-addi 0 1 5
+addi 1 0 5
 subi 1 1 1
 nop 0
 nop 0
-bneq 0 1 -4
+bneq 1 0 -4
 addi 2 2 1
 nop 0
