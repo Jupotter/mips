@@ -1,9 +1,9 @@
 
 PRG=mips
-SRC=main.cpp pipeline_stage.cpp context.cpp instruction_fetch.cpp \
-    execution.cpp memory_stage.cpp write_back.cpp instruction_decode.cpp \
-    register.cpp register_file.cpp pipeline.cpp hazard_unit.cpp \
-    forwarding_unit.cpp
+SRC=main.cc pipeline_stage.cc context.cc instruction_fetch.cc \
+    execution.cc memory_stage.cc write_back.cc instruction_decode.cc \
+    register.cc register_file.cc pipeline.cc hazard_unit.cc \
+    forwarding_unit.cc
 
 INCLUDEDIR=../include/
 LIBDIR=../lib/
@@ -14,7 +14,7 @@ LDFLAGS=-ltbb -lrt
 CC=gcc
 CXX=g++
 
-OBJ=$(addprefix objs/, $(notdir $(SRC:.cpp=.o)))
+OBJ=$(addprefix objs/, $(notdir $(SRC:.cc=.o)))
 
 all : $(PRG)
 
@@ -25,7 +25,7 @@ $(PRG) : $(OBJ)
 objs/%.o : %.c Makefile | objs
 	$(CC) $(CFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o $@
 
-objs/%.o : %.cpp Makefile | objs
+objs/%.o : %.cc Makefile | objs
 	$(CXX) $(CXXFLAGS) $(addprefix -I, $(INCLUDEDIR)) -c $< -o $@
 
 objs :
